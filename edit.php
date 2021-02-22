@@ -26,7 +26,7 @@
   <body>
     <h2 style="text-align:center;">Edit Your Details </h2> 
       <?php
-      session_start();
+      // session_start();
       if (isset($_SESSION['User'])){
         echo '<b>welcome:</b> <h3 style="color: blue; font-weight: bolder ">'.$_SESSION['User']. ' </h3>';
       }  
@@ -149,3 +149,4 @@ header('Location:view.php');
 }
   }
 ?>
+

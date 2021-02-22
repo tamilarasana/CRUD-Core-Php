@@ -1,33 +1,3 @@
-<?php
-include "config.php ";
-if (isset($_POST['submit'])){    
-
-    $reg=$_POST['register'];
-    $name=$_POST['name'];
-    $age=$_POST['age'];
-    $year=$_POST['year'];
-    $gender=$_POST['gender'];
-    $dep=$_POST['department'];
-    $phone=$_POST['phone'];   
-    $image=$_FILES['image']; 
-    $file_name = $image['tmp_name'];
-    $destination = $image['name'];
-    if(move_uploaded_file($file_name,"uploads/".$destination)){
-    
-      $sql = "INSERT INTO details (std_regno, std_name, std_age, std_year, std_gender, std_department, std_phone, std_image) 
-            VALUES ( '$reg', '$name', '$age', '$year', '$gender', '$dep', '$phone','$destination')";
-        if ($conn->query($sql) === TRUE) {
-          header('Location:view.php?success=Your Information has storred Successfuly');
-          exit();
-        } else {
-                 header('Location:details.php?error=unknow error occurred');
-          exit();
-        }  
-   $conn->close();
-      }
- }
-      
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,15 +10,8 @@ if (isset($_POST['submit'])){
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
 </head>
-    <body>
-        <div class="container pt-4">
-        <?php
-              if (isset($_SESSION['User'])){
-                echo '<b>welcome:</b> <h3 style="color: blue; font-weight: bolder ">'.$_SESSION['User']. ' </h3>';
-              }else{
-                header("location:index.php");
-              }
-            ?>
+<body>
+        <div class="container pt-4">      
             <div class="card card-custom">            
                 <div class="card-header">                  
                     <nav class="navbar navbar-default">
@@ -65,10 +28,9 @@ if (isset($_POST['submit'])){
                     </div>             
                   </div>
                 </nav>
-                </div>                
+                </div>           
                     <!--begin::Form-->
-                    
-                    <form class="needs-validation" name="myForm" action="details.php" method="post" autocomplete="off"  enctype ="multipart/form-data"  novalidate>     
+                   <form  class="needs-validation" action="update.php" method="post" autocomplete="off" enctype="multipart/form-data">
                     <div class="card-body">
                       <div class="form-group mb-8">
                         <div class="alert alert-custom alert-default" role="alert">
@@ -79,21 +41,22 @@ if (isset($_POST['submit'])){
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Register Number</strong></label>
                         <div class="col-md-6">
-                          <input type ="text" name="register" id="register"  placeholder="Register Number" class="form-control" maxlength="15" minlength="6"  pattern="^[a-zA-Z0-9_.-]*$"  required/>
+                          <input type ="text" name="register" id="register"  placeholder="Register Number" class="form-control" maxlength="15" minlength="6"  pattern="^[a-zA-Z0-9_.-]*$" >
                         </div>
                         <div class="invalid-feedback">Please enter Register Number.</div>
+                        <input type="hidden" name="update_id"  placeholder="Register Number" class="form-control"  value = "<?php echo $id; ?>">  
                     </div>
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Name</strong></label>
                         <div class="col-6">
-                          <input name="name" placeholder="Name"   id="name" class="form-control" maxlength="15" minlength="4"  pattern="^[a-zA-Z]*$" required/>
+                          <input name="name" placeholder="Name"   id="name" class="form-control" maxlength="15" minlength="4"  pattern="^[a-zA-Z]*$" >
                       </div>
                       <div class="invalid-feedback">Please enter your Name.</div>
                     </div>
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Age</strong></label>
                         <div class="col-6">
-                          <input name="age" placeholder="Age" id= "age" class="form-control" maxlength="2" minlength="2" pattern="^[0-9_.-]*$"  required/>
+                          <input name="age" placeholder="Age" id= "age" class="form-control" maxlength="2" minlength="2" pattern="^[0-9_.-]*$"  > 
                       </div>
                       <div class="invalid-feedback">Please enter your Age.</div>
                     </div>
@@ -102,21 +65,21 @@ if (isset($_POST['submit'])){
                         <div class="col-6 col-form-label">
                           <div class="radio-inline">
                             <label class="radio radio-success">
-                              <input type="radio" name="year" id="year" value="II Year" required />
+                              <input type="radio" name="year" id="year" value="I Year" >
                                 <span></span>
                                 <div class="invalid-feedback">Please Select your Year.</div>
                                   I Year
                                   </label>
                                   <br>
                                     <label class="radio radio-success">
-                                      <input type="radio"  name="year" id="year" value="I Year" required  />
+                                      <input type="radio"  name="year" id="year" value="I Year" >
                                       <span></span>
                                       <div class="invalid-feedback">Please Select your Year.</div>
                                       II year
                                     </label>
                                     <br>
                                     <label class="radio radio-success">
-                                    <input type="radio" name="year" id="year" value="III Year" required />
+                                    <input type="radio" name="year" id="year" value="III Year" >
                                   <span></span>
                                   <div class="invalid-feedback">Please Select your Year.</div>
                                 III Year
@@ -130,14 +93,14 @@ if (isset($_POST['submit'])){
                         <div class="col-6 col-form-label">
                           <div class="radio-inline">
                             <label class="radio radio-success">
-                              <input type="radio"  type="radio" name="gender" id="gender" value="Male" required />
+                              <input type="radio"  type="radio" name="gender" id="gender" value="Male"  >
                                 <span></span>
                                 <div class="invalid-feedback">Please Select your Gender.</div>
                                    Male
                                 </label>
                                 <br>
                                 <label class="radio radio-success">
-                              <input type="radio"name="gender" id="gender" value="Female" required />
+                              <input type="radio"name="gender" id="gender" value="Female"   >
                           <span></span>
                           <div class="invalid-feedback">Please Select your Gender.</div>
                         Female
@@ -146,14 +109,22 @@ if (isset($_POST['submit'])){
                       </div>
                     </div>
                     <div class="form-group row">
+                    <?php 
+                    $drop_down_array = ['BE' => 'BE', 'ME' => 'ME', 'MCA' => 'MCA', 'MBA' => 'MBA'];
+                  ?>
                       <label class="col-2 col-form-label"><strong>Department</strong> </label>
                         <div class="col-6 col-form-label">
-                        <select type="text" name="department" id= "department" class="form-control" required>
+                        <select type="text" name="department" id= "department" class="form-control" >
                           <option value="">--Select--</option>
-                          <option value="BE">BE</option>
-                          <option value="ME">ME</option> 
-                          <option value="MCA">MCA</option> 
-                          <option value="MBA">MBA</option>                               
+                          <?php 
+                        foreach ($drop_down_array as $key => $value) {
+                        if ($dept == $key) {
+                        echo "<option value=".$key." selected='selected'>".$value."</option>";
+                        } else {
+                        echo "<option value=".$key.">".$value."</option>";
+                        }
+                        }
+                        ?>                            
                         </select> 
                         <div class="invalid-feedback">Please Select Your Department.</div>   
                       </div>
@@ -161,14 +132,17 @@ if (isset($_POST['submit'])){
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Phone Number</strong></label>
                         <div class="col-6">
-                        <input type="text" name="phone" placeholder="Phone" class="form-control" maxlength="15" minlength="10" pattern="^[0-9_.-]*$" required>
+                        <input type="text" name="phone" placeholder="Phone" class="form-control" maxlength="15" minlength="10" pattern="^[0-9_.-]*$" >  
                          <div class="invalid-feedback">Please enter your phone number .</div>
                         </div>
                     </div>
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Upload Image</strong></label>
                         <div class="col-6">                 
-                           <input type="file" id="image" class="form-control" name="image" accept=".jpg,.png" required>
+                           <input type="file" id="image" class="form-control" name="image" accept=".jpg,.png" >
+                           <br>
+                             <img src="uploads/<?php echo $img ;?>" width ="200px" height = "100px" >
+                             <br>
                            <div class="invalid-feedback">Please Select your Image.</div>
                         <br>
                       </div>
@@ -179,7 +153,7 @@ if (isset($_POST['submit'])){
                           </div>
                           <div class="col-lg-2"></div>
                             <div class="col-lg-6">
-                            <tr><input type="submit" name="submit" class="btn btn-success" value="submit" />
+                            <tr><input type="submit" name="submit" class="btn btn-success" value="Update" />
                             <td><a class="btn btn-danger" href="index.php">Cancel</a></td></tr>
                              
                           </div>
@@ -208,3 +182,5 @@ if (isset($_POST['submit'])){
         </div>
     </body>
 </html>
+<?php
+

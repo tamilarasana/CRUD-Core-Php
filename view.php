@@ -17,13 +17,12 @@
     <title>details</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        				
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        				
     </head>
-      <body>           
+        <body>           
         <h2 style="text-align:center;">Details </h2>
           <?php
-          session_start();
+          // session_start();
           if(isset($_SESSION['User'])){
           echo '<b>welcome:</b> <h3 style="color: blue; font-weight: bolder ">'.$_SESSION['User']. ' </h3>';
           }  
@@ -31,16 +30,15 @@
           header("Location:index.php");
           }                
           ?>    
-            <form class="" action="" method="get" autocomplete="off">   
+            <form class="" action="" method="get" autocomplete="off">  
+               <?php if(isset($_GET['success'])){?>
+                  <p class="text-success"><?php echo$_GET['success'];?></p>
+                  <?php }?> 
                 <nav class="navbar navbar-default">
                   <div class="container-fluid" style="margin: 10px auto">
                     <div class="nav navbar-left">               
                       <a class="btn btn-success" href="details.php">Create</a>
-                    </div>
-                    <div class="navbar-form"   role="search" style="display: inline">                        
-                      <input type="text" name ="search" id="search"   class="form-control"placeholder="Search for names.." >                      
-                        <button class="btn btn-success" type ="submit" name="search">search</button>
-                        </div>
+                    </div>                   
                     <div class="nav navbar-right">               
                       <a class="btn btn-warning" href="logout.php?logout">Logout</a>
                     </div>             
@@ -108,7 +106,6 @@
                       </div>
                       </div>
                 </form>
-            </div> 
-            
+            </div>             
       </body>
 </html>
