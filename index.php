@@ -33,13 +33,8 @@ if(isset($_POST['login']))
 <html lang="en">
 <head>
   <title>Login page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel ="stylesheet" href="style.css">
+      <?php require "script.php"?>
+      <link rel ="stylesheet" href="style.css">
   </head>
       <?php 
         if(@$_GET['Empty']==true){
@@ -67,7 +62,7 @@ if(isset($_POST['login']))
       <div class="card-header text-center text-info">
       <h2 class="py-2">Login</h2>
       </div>
-      <form class="" action = ""  method="POST" >   
+      <form name="myForm" onsubmit="return validateForm()" class="" action = ""  method="POST" >   
             <div class="card-body">
               <div class="mb-15">
                   <div class="form-group row">
@@ -112,7 +107,19 @@ if(isset($_POST['login']))
           setTimeout(function(){ div.style.display = "none"; }, 600);
         }
       }
-    </script>
+
+      function validateForm() {
+        var x = document.forms["myForm"]["username"].value;
+        var y = document.forms["myForm"]["password"].value;
+          if (x == "") {
+            alert("Please Enter Your Name");
+            return false;
+          }else if(y == "") {
+            alert("Please Enter Your Password");
+           return false;
+        }
+      }
+</script>
   </body>
 </html>
 

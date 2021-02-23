@@ -10,7 +10,6 @@
     $sql = "SELECT * FROM  details  limit $start_from, $num_per_page";
     $result = $conn->query($sql);    
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
