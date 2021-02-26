@@ -7,28 +7,34 @@
 		}
 		$num_per_page = 05;
 		$start_from = ($page-1)*05;
-    $sql = "SELECT * FROM  details  limit $start_from, $num_per_page";
+    $sql = "SELECT * FROM  student_details  limit $start_from, $num_per_page";
     $result = $conn->query($sql);    
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-    <title>details</title>
+    <title>Student details</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        				
+              				
     </head>
-        <body>           
-        <h2 style="text-align:center;">Details </h2>
-          <?php
-          // session_start();
-          if(isset($_SESSION['User'])){
-          echo '<b>welcome:</b> <h3 style="color: blue; font-weight: bolder ">'.$_SESSION['User']. ' </h3>';
-          }  
-          else {
-          header("Location:index.php");
-          }                
-          ?>    
+    <?php if(isset($_SESSION['status_delete'])){ ?>
+            <div class="alert alert-danger" role="alert">
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <b class="text-center"><?= $_SESSION['status_delete'];?></b>
+               </div>
+             <?php } unset($_SESSION['status_delete']);?>  
+        <body>      
+        <?php if(isset($_SESSION['status_code'])){ ?>
+            <div class="alert alert-success" role="alert">
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+               <b class="text-center"><?= $_SESSION['status_code'];?></b>
+               </div>
+             <?php } unset($_SESSION['status_code']);?>     
+        <h2 style="text-align:center;">Student Details </h2>    
             <form class="" action="" method="get" autocomplete="off">  
                <?php if(isset($_GET['success'])){?>
                   <p class="text-success"><?php echo$_GET['success'];?></p>
@@ -37,25 +43,25 @@
                   <div class="container-fluid" style="margin: 10px auto">
                     <div class="nav navbar-left">               
                       <a class="btn btn-success" href="details.php">Create</a>
-                    </div>                   
+                    </div>
                     <div class="nav navbar-right">               
                       <a class="btn btn-warning" href="logout.php?logout">Logout</a>
                     </div>             
                   </div>
                 </nav>
                   <div class="col-md-12 ">
-                  <table class="table table-striped">
-                    <!-- <table id ="tabledata" class="table table-responsive"> -->
-                        <thead>
+                  <table class="table table-striped table-hover">
+                        <thead class="bg-primary">
                           <tr>
                           <th>Register Number</th>
-                          <th>Name</th>
+                          <th>Student Name</th>
                           <th>Age</th>
                           <th>Year</th>
                           <th>Gender</th>
                           <th>Department</th>
                           <th>Phone Number</th>
                           <th>Image</th>
+                          <th>Action</th>
                           </tr>
                         </thead>
                       <tbody>
@@ -74,18 +80,10 @@
                             <td><img src = "uploads/<?php echo $row['std_image']; ?>" width ="70" > </td>                                        
                             <div class="form-group">
                             <td>                                                
-                              <a class="btn btn-success"href = "edit.php?id=<?php  echo  $row['id'];?>"> Edit</a>
+                              <a class="btn btn-success" onClick="editMe(<?php  echo  $row['id'];?>)"> Edit</a>
                               <a class="btn btn-danger" onClick="deleteMe(<?php  echo  $row['id'];?>)"> Delete</a>                                       
                             </td>
-                          </tr> 
-                          <script>
-                          function  deleteMe(delid) {
-                            if(confirm("Do you want Delete!")){
-                              window.location.href='delete.php?id='+delid+'';
-                              return true;
-                            }
-                          }
-                          </script>                                                                 
+                          </tr>                                                                                   
                         <?php
                           }                                                                    
                           }
@@ -94,7 +92,7 @@
                       </tbody>
                     </table>
                       <?php
-                        $pr_query = "SELECT * FROM details";
+                        $pr_query = "SELECT * FROM student_details";
                         $result = $conn->query($pr_query);
                         $totalrecord =mysqli_num_rows($result);
                         $totalpages = ceil( $totalrecord/$num_per_page);
@@ -105,6 +103,23 @@
                       </div>
                       </div>
                 </form>
-            </div>             
+                  <script>
+                        function  deleteMe(delid) {
+                          if(confirm("Do you want Delete!")){
+                            window.location.href='delete.php?id='+delid+'';
+                            return true;
+                          }
+                        }
+
+                        function  editMe(editid) {
+                          if(confirm("Do you want Edit Your Data !")){
+                            window.location.href='edit.php?id='+editid+'';
+                            return true;
+                          }
+                        }
+                    </script>       
+            </div>    
+                    
       </body>
+      
 </html>

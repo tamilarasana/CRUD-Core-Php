@@ -4,8 +4,7 @@
 $name_error ='';
 $password_error = '';
 
-if(isset($_POST['login']))
-{ 
+if(isset($_POST['login'])){ 
     if(empty($_POST['username'])){
       $name_error = "<p>Please Enter Your Name</p>";      
     // header("Location:index.php?Empty=Please Enter  Username and Password ");
@@ -27,8 +26,6 @@ if(isset($_POST['login']))
     }
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +51,6 @@ if(isset($_POST['login']))
   <?php
   }
   ?>
-
 </head>
   <body>
       <div class="container col-4 py-4  my-4  ">
@@ -89,7 +85,7 @@ if(isset($_POST['login']))
                       <div class="col-lg-4"></div>
                         <div class="col-lg-6">
                         <button type="submit" name="login"  class="btn btn-success mr-2">Login</button>
-                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                        <button type="reset" class="btn btn-secondary">Reset</button>
                     </div>
                 </div>
           </form>
@@ -104,7 +100,7 @@ if(isset($_POST['login']))
           close[i].onclick = function(){
           var div = this.parentElement;
           div.style.opacity = "0";
-          setTimeout(function(){ div.style.display = "none"; }, 600);
+          setTimeout(function(){ div.style.display = "none"; }, 400);
         }
       }
 
@@ -119,7 +115,7 @@ if(isset($_POST['login']))
            return false;
         }
       }
-</script>
+      </script>
   </body>
 </html>
 

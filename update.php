@@ -20,12 +20,11 @@
 			}
 			move_uploaded_file($tmp_name, "uploads/".$file_name);
      	}
-		$sql = "UPDATE  details SET std_regno = '$reg', std_name = '$name', std_age = '$age', std_year = '$year', std_gender = '$gender', std_department = '$dep', std_phone = '$phone', std_image ='$file_name'  WHERE id = '$user_id'"; 
+		$sql = "UPDATE  student_details SET std_regno = '$reg', std_name = '$name', std_age = '$age', std_year = '$year', std_gender = '$gender', std_department = '$dep', std_phone = '$phone', std_image ='$file_name'  WHERE id = '$user_id'"; 
 		if ($conn->query($sql) === TRUE) { 
-			echo '<script>alert("Please update your data")</script>';        
+			$_SESSION['status_code']= "Your Information is Store Successfully";      
 			header('Location:view.php');
 		}else {
-			echo '<script>alert("Please update your data")</script>';
 			header('Location:view.php');
 		}
 	}

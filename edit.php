@@ -2,7 +2,7 @@
   include "config.php ";
   if (isset($_GET['id'])){
    $user_id = $_GET['id'];
-        $sql = "SELECT * FROM details WHERE id = '$user_id'";
+        $sql = "SELECT * FROM student_details WHERE id = '$user_id'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0){
           while ($row = $result->fetch_assoc()){
@@ -32,7 +32,7 @@
         <div class="container pt-4"> 
         <?php
               if (isset($_SESSION['User'])){
-                echo '<b>welcome:</b> <h3 style="color: blue; font-weight: bolder ">'.$_SESSION['User']. ' </h3>';
+                echo '<b>welcome:</b> <h3 style="color: blue; font-weight: bolder ">'.$_SESSION['User'].'</h3>';
               }else{
                 header("location:index.php");
               }
@@ -54,7 +54,7 @@
                 </nav>
                 </div>           
                     <!--begin::Form-->
-                   <form  class="needs-validation" action="update.php" method="post" autocomplete="off" enctype="multipart/form-data">
+                   <form  class="needs-validation" action="update.php" method="post" autocomplete="off" enctype="multipart/form-data" novalidate>
                     <div class="card-body">
                       <div class="form-group mb-8">
                         <div class="alert alert-custom alert-default" role="alert">
@@ -65,48 +65,48 @@
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Register Number</strong></label>
                         <div class="col-md-6">
-                          <input type ="text" name="register" id="register"  placeholder="Register Number" class="form-control" maxlength="15" minlength="6"  pattern="^[a-zA-Z0-9_.-]*$" required  value = "<?php echo $reg; ?>">
+                          <input type ="text" name="register" id="register"  placeholder="Register Number" class="form-control" maxlength="15" minlength="6"  pattern="^[a-zA-Z0-9_.-]*$" required  value="<?php echo $reg; ?>">
+                             <div class="invalid-feedback">Please enter Register Number.</div>
                         </div>
-                        <div class="invalid-feedback">Please enter Register Number.</div>
-                        <input type="hidden" name="update_id"  placeholder="Register Number" class="form-control"  value = "<?php echo $id; ?>">  
+                        <input type="hidden" name="update_id"  placeholder="Register Number" class="form-control"  value = "<?php echo $id;?>">  
                     </div>
                     <div class="form-group row">
-                      <label  class="col-2 col-form-label"><strong>User Name</strong></label>
+                      <label  class="col-2 col-form-label"><strong>Student Name</strong></label>
                         <div class="col-6">
-                          <input name="name" placeholder="Name"  id="name" class="form-control" maxlength="15" minlength="4"  pattern="^[a-zA-Z]*$" required value = "<?php echo $name; ?>"> 
+                          <input name="name" placeholder="Name"  id="name" class="form-control" maxlength="15" minlength="4"  pattern="^[a-z . A-Z]*$" required value="<?php echo $name; ?>"> 
+                           <div class="invalid-feedback">Please enter your Name.</div>
                       </div>
-                      <div class="invalid-feedback">Please enter your Name.</div>
                     </div>
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Age</strong></label>
                         <div class="col-6">
-                          <input name="age" placeholder="Age" id= "age" class="form-control" maxlength="2" minlength="2" pattern="^[0-9_.-]*$"  required value = "<?php echo $age; ?>"> 
+                          <input name="age" placeholder="Age" id= "age" class="form-control" maxlength="2" minlength="2" pattern="^[0-9_.-]*$"  required value="<?php echo $age; ?>"> 
+                           <div class="invalid-feedback">Please enter your Age.</div>
                       </div>
-                      <div class="invalid-feedback">Please enter your Age.</div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-2 col-form-label"><strong>Year </strong></label>
+                      <label class="col-2 col-form-label"><strong>Year</strong></label>
                         <div class="col-6 col-form-label">
                           <div class="radio-inline">
                             <label class="radio radio-success">
                               <input type="radio" name="year" id="year" required value="I Year" <?php if($year == 'I Year'){ echo "checked";} ?>>
                                 <span></span>
-                                <div class="invalid-feedback">Please Select your Year.</div>
+                                <!-- <div class="invalid-feedback">Please Select your Year.</div> -->
                                   I Year
                                   </label>
                                   <br>
                                     <label class="radio radio-success">
                                       <input type="radio"  name="year" id="year" required value="II Year"<?php if($year == 'II Year'){ echo "checked";} ?>>
                                       <span></span>
-                                      <div class="invalid-feedback">Please Select your Year.</div>
+                                      <!-- <div class="invalid-feedback">Please Select your Year.</div> -->
                                       II year
                                     </label>
                                     <br>
                                     <label class="radio radio-success">
-                                    <input type="radio" name="year" id="year" required value="III Year" <?php if($year == 'III Year'){ echo "checked";} ?>>
-                                  <span></span>
-                                  <div class="invalid-feedback">Please Select your Year.</div>
-                                III Year
+                                     <input type="radio" name="year" id="year" required value="III Year" <?php if($year == 'III Year'){ echo "checked";} ?>>
+                                     <span></span>
+                                     III Year
+                                <div class="invalid-feedback">Please Select your Year.</div>
                           </label>       
                           <br>         
                         </div>           
@@ -119,15 +119,15 @@
                             <label class="radio radio-success">
                               <input type="radio"  type="radio" name="gender" id="gender" required value="Male"<?php if($gender == 'Male'){ echo "checked";} ?>>
                                 <span></span>
-                                <div class="invalid-feedback">Please Select your Gender.</div>
+                                <!-- <div class="invalid-feedback">Please Select your Gender.</div> -->
                                    Male
                                 </label>
                                 <br>
                                 <label class="radio radio-success">
-                              <input type="radio"name="gender" id="gender"  required value="Female" <?php if($gender == 'Female'){ echo "checked";}?> >
-                          <span></span>
-                          <div class="invalid-feedback">Please Select your Gender.</div>
-                        Female
+                              <input type="radio"name="gender" id="gender"  required value="Female" <?php if($gender == 'Female'){ echo "checked";}?>>
+                              <span></span>
+                             Female
+                           <div class="invalid-feedback">Please Select your Gender.</div>
                       </label>                            
                       </div>           
                       </div>
@@ -139,14 +139,14 @@
                       <label class="col-2 col-form-label"><strong>Department</strong> </label>
                         <div class="col-6 col-form-label">
                         <select type="text" name="department" id= "department" class="form-control" >
-                          <option value="">--Select--</option>
+                          
                           <?php 
                         foreach ($drop_down_array as $key => $value) {
-                        if ($dept == $key) {
-                        echo "<option value=".$key." selected='selected'>".$value."</option>";
-                        } else {
-                        echo "<option value=".$key.">".$value."</option>";
-                        }
+                          if ($dept == $key) {
+                            echo "<option value=".$key." selected='selected'>".$value."</option>";
+                            } else {
+                            echo "<option value=".$key.">".$value."</option>";
+                          }
                         }
                         ?>                            
                         </select> 
@@ -156,16 +156,16 @@
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Phone Number</strong></label>
                         <div class="col-6">
-                        <input type="text" name="phone" placeholder="Phone" class="form-control" maxlength="15" minlength="10" pattern="^[0-9_.-]*$" required value = "<?php echo $phone; ?>">   
-                         <div class="invalid-feedback">Please enter your phone number .</div>
+                        <input type="text" name="phone" placeholder="Phone" class="form-control" maxlength="15" minlength="10" pattern="^[0-9_.-]*$" required value="<?php echo $phone; ?>">   
+                         <div class="invalid-feedback">Please enter your phone number.</div>
                         </div>
                     </div>
                     <div class="form-group row">
                       <label  class="col-2 col-form-label"><strong>Upload Image</strong></label>
                         <div class="col-6">                 
-                           <input type="file" id="image" class="form-control" name="image" accept=".jpg,.png" value = "<?php echo $img; ?>">
+                           <input type="file" id="image" class="form-control" name="image" accept=".jpg,.png,.jpeg" value = "<?php echo $img; ?>">
                            <br>
-                             <img src="uploads/<?php echo $img ;?>" width ="200px" height = "100px" >
+                             <img src="uploads/<?php echo $img ;?>" width ="200px" height="100px" >
                              <input type="hidden" value="<?php echo $img ;?>" name="old_image" />
                              <br>
                            <div class="invalid-feedback">Please Select your Image.</div>
